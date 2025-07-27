@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Apply Smart</title>
+  <style>
+    body {
+      background-color: #d4e8d4; /* pastel green */
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      color: #444;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #f0f2f1; /* light grey */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #a3b9a3;
+    }
+    h1 {
+      text-align: center;
+      color: #5a7d5a;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #567856;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #9bb89b;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #7fbf7f;
+      color: white;
+      border: none;
+      padding: 12px;
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    input[type="submit"]:hover {
+      background-color: #5e945e;
+    }
+    .flash-message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .flash-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .signup-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .signup-link a {
+      color: #567856;
+      text-decoration: none;
+    }
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <label for="username">{{ form.username.label }}</label>
+      {{ form.username(size=32) }}
+
+      <label for="password">{{ form.password.label }}</label>
+      {{ form.password(size=32) }}
+
+      {{ form.submit() }}
+    </form>
+    <div class="signup-link">
+      Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.
+    </div>
+  </div>
+</body>
+</html>

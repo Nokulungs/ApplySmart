@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Apply Smart</title>
+  <style>
+    /* Overall page background and font */
+    body {
+      background-color: #e6f0e6; /* pastel green background */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #2e6b2e; /* darker green */
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #f8f9f8; /* light pastel grey */
+      border: 1px solid #c2ccc2;
+      border-radius: 8px;
+      padding: 25px 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #4a704a;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #a3b8a3;
+      border-radius: 5px;
+      font-size: 1rem;
+      color: #2e2e2e;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+      border-color: #4a704a;
+      outline: none;
+    }
+
+    fieldset {
+      border: 1.5px solid #a3b8a3;
+      border-radius: 8px;
+      padding: 15px 20px 25px 20px;
+      margin-bottom: 25px;
+      background-color: #e9f1e9;
+    }
+
+    legend {
+      font-weight: 700;
+      color: #356335;
+      padding: 0 10px;
+      font-size: 1.1rem;
+    }
+
+    #subjects-list {
+      margin-top: 15px;
+      list-style-type: none;
+      padding-left: 0;
+      max-height: 160px;
+      overflow-y: auto;
+      border: 1px solid #a3b8a3;
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    #subjects-list li {
+      padding: 8px 12px;
+      border-bottom: 1px solid #d1e0d1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      color: #2e6b2e;
+    }
+
+    #subjects-list li:last-child {
+      border-bottom: none;
+    }
+
+    #subjects-list button {
+      background-color: #cc6666;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #subjects-list button:hover {
+      background-color: #b04c4c;
+    }
+
+    #add-subject-btn {
+      background-color: #7bbf7b;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    #add-subject-btn:hover {
+      background-color: #4a704a;
+    }
+
+    input[type="submit"], button[type="submit"] {
+      background-color: #4a704a;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 700;
+      width: 100%;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover, button[type="submit"]:hover {
+      background-color: #2e6b2e;
+    }
+
+    /* Error message styling */
+    p[style*="color:red"] {
+      background-color: #ffdede;
+      border: 1px solid #cc6666;
+      color: #a33a3a;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>Apply Smart - Student Application</h1>
+
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" id="application-form">
+    {{ form.hidden_tag() }}
+
+    <p>
+      {{ form.student_name.label }}<br>
+      {{ form.student_name(size=40) }}
+    </p>
+
+    <p>
+      {{ form.university.label }}<br>
+      {{ form.university() }}
+    </p>
+
+    <fieldset>
+      <legend>Enter your subjects and APS points</legend>
+
+      <label for="subject-name">Subject Name:</label>
+      <input type="text" id="subject-name" name="subject-name" placeholder="e.g. Mathematics" />
+
+      <label for="subject-point">APS Point:</label>
+      <select id="subject-point" name="subject-point">
+        <option value="">Select</option>
+        {% for i in range(1, 8) %}
+        <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="button" id="add-subject-btn">Add Subject</button>
+
+      <ul id="subjects-list">
+        <!-- added subjects will show here -->
+      </ul>
+    </fieldset>
+
+    {{ form.subjects_data() }}
+
+    <p>{{ form.submit() }}</p>
+  </form>
+  <form action="{{ url_for('logout') }}" method="get" style="text-align: right;">
+    <button type="submit" style="background-color: #88c9a1; color: white; padding: 8px 16px; border: none; border-radius: 4px;">
+        Logout
+    </button>
+</form>
+  <script>
+    const addBtn = document.getElementById('add-subject-btn');
+    const subjectNameInput = document.getElementById('subject-name');
+    const subjectPointSelect = document.getElementById('subject-point');
+    const subjectsList = document.getElementById('subjects-list');
+    const subjectsDataInput = document.getElementById('{{ form.subjects_data.id }}');
+
+    let subjects = [];
+
+    function updateSubjectsData() {
+      // Serialize subjects array as JSON and set hidden input value
+      subjectsDataInput.value = JSON.stringify(subjects);
+    }
+
+    function addSubject() {
+      const name = subjectNameInput.value.trim();
+      const point = subjectPointSelect.value;
+
+      if (!name) {
+        alert('Please enter a subject name.');
+        return;
+      }
+      if (!point) {
+        alert('Please select APS point.');
+        return;
+      }
+
+      // Check for duplicates
+      if(subjects.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+        alert('Subject already added.');
+        return;
+      }
+
+      // Add to subjects array
+      subjects.push({name, point: parseInt(point)});
+      updateSubjectsData();
+
+      // Add to UI list
+      const li = document.createElement('li');
+      li.textContent = `${name} — APS Point: ${point}`;
+
+      // Remove button
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.textContent = 'Remove';
+      removeBtn.style.marginLeft = '10px';
+      removeBtn.onclick = () => {
+        subjects = subjects.filter(s => s.name.toLowerCase() !== name.toLowerCase());
+        updateSubjectsData();
+        li.remove();
+      };
+      li.appendChild(removeBtn);
+
+      subjectsList.appendChild(li);
+
+      // Clear inputs
+      subjectNameInput.value = '';
+      subjectPointSelect.value = '';
+      subjectNameInput.focus();
+    }
+
+    addBtn.addEventListener('click', addSubject);
+
+    // On form submit, validate min 7 subjects
+    document.getElementById('application-form').addEventListener('submit', function(event) {
+      if (subjects.length < 7) {
+        alert('Please add at least 7 subjects.');
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

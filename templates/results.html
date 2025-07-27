@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results – Apply Smart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #e6f0e6; /* pastel green background */
+            color: #2e6b2e;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #f8f9f8; /* light pastel grey */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #356335; /* dark green */
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 8px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1.5px solid #a3b8a3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2e6b2e;
+        }
+
+        .no-courses {
+            color: #a33a3a;
+            background-color: #ffdede;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .apply-btn {
+            background-color: #7bbf7b;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background-color: #4a704a;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            background: #4a704a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #2e6b2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Application Results</h1>
+
+        <p><strong>Name:</strong> {{ student_name }}</p>
+        <p><strong>University Selected:</strong> {{ university }}</p>
+        <p><strong>Your APS Score:</strong> {{ aps_score }}</p>
+
+        <h2>Qualifying Courses:</h2>
+
+        {% if qualifying_courses %}
+            <ul>
+                {% for course in qualifying_courses %}
+                    <li>
+                        {{ course.name }}
+                        <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="apply-btn">Apply</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-courses">
+                Unfortunately, you do not currently qualify for any courses at {{ university }} based on your APS.
+            </p>
+        {% endif %}
+
+        <a href="{{ url_for('apply') }}" class="back-link">← Back to Form</a>
+    </div>
+    <form action="{{ url_for('logout') }}" method="get" style="text-align: right;">
+    <button type="submit" style="background-color: #88c9a1; color: white; padding: 8px 16px; border: none; border-radius: 4px;">
+        Logout
+    </button>
+</form>
+</body>
+</html>
