@@ -1,127 +1,667 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Results – Apply Smart</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #e6f0e6; /* pastel green background */
-            color: #2e6b2e;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results · ApplySmart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #f8f9f8; /* light pastel grey */
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        h1, h2 {
-            color: #356335; /* dark green */
-            margin-bottom: 15px;
-        }
+    :root {
+      --gold: #c5a059;
+      --gold-dark: #a8833d;
+      --dark-bg: #111418;
+      --text-dark: #222222;
+      --text-muted: #666666;
+      --light-bg: #f4f5f7;
+      --cream: #faf9f6;
+      --white: #ffffff;
+      --danger: #b03a3a;
+      --danger-bg: #fdeaea;
+      --success: #2d7a4d;
+      --success-bg: #e4f3ea;
+      --border: #e5e3dd;
+    }
 
-        p {
-            font-size: 1.1rem;
-            margin: 8px 0;
-        }
+    html { scroll-behavior: smooth; }
 
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 20px;
-        }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-        li {
-            background: white;
-            margin-bottom: 12px;
-            padding: 12px 15px;
-            border-radius: 6px;
-            border: 1.5px solid #a3b8a3;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: #2e6b2e;
-        }
+    /* ---------- TOP BAR ---------- */
+    .topbar {
+      background: var(--dark-bg);
+      padding: 20px 5%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
 
-        .no-courses {
-            color: #a33a3a;
-            background-color: #ffdede;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            margin-top: 20px;
-        }
+    .topbar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .apply-btn {
-            background-color: #7bbf7b;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 700;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      text-decoration: none;
+    }
 
-        .apply-btn:hover {
-            background-color: #4a704a;
-        }
+    .brand-emblem {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 25px;
-            text-decoration: none;
-            background: #4a704a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            transition: background-color 0.3s ease;
-        }
+    .brand-emblem-inner {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
 
-        .back-link:hover {
-            background: #2e6b2e;
-        }
-    </style>
+    .brand-emblem-inner .title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand-emblem-inner .sub {
+      font-size: 0.36rem;
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+      margin-top: 1px;
+      text-transform: uppercase;
+    }
+
+    .brand-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+    }
+
+    .logout-form { margin: 0; }
+
+    .logout-btn {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 9px 20px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ---------- PAGE LAYOUT ---------- */
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-header .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ---------- RESULT SUMMARY CARD ---------- */
+    .summary-card {
+      background: var(--dark-bg);
+      color: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px -20px rgba(17, 20, 24, 0.5);
+    }
+
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(197, 160, 89, 0.22), transparent 55%),
+        radial-gradient(circle at 85% 80%, rgba(197, 160, 89, 0.12), transparent 50%);
+      pointer-events: none;
+    }
+
+    .summary-header {
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .summary-header .label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .summary-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .summary-header h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .summary-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-item .item-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .summary-item .item-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: #fff;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .summary-item .item-value.aps {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* ---------- SECTION TITLE ---------- */
+    .section-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-title h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .section-title .count {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .section-title .count strong {
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    /* ---------- COURSE LIST ---------- */
+    .course-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .course-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--success);
+      border-radius: 14px;
+      padding: 20px 24px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      animation: slideIn 0.4s ease both;
+    }
+
+    .course-item:nth-child(1) { animation-delay: 0.02s; }
+    .course-item:nth-child(2) { animation-delay: 0.06s; }
+    .course-item:nth-child(3) { animation-delay: 0.10s; }
+    .course-item:nth-child(4) { animation-delay: 0.14s; }
+    .course-item:nth-child(5) { animation-delay: 0.18s; }
+    .course-item:nth-child(6) { animation-delay: 0.22s; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .course-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.15);
+      border-left-color: var(--gold);
+    }
+
+    .course-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .course-check {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--success-bg);
+      color: var(--success);
+      display: grid;
+      place-items: center;
+    }
+
+    .course-check svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .course-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .course-tag {
+      display: none; /* shown on mobile */
+    }
+
+    .apply-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark-bg);
+      color: #fff;
+      text-decoration: none;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px -10px rgba(17, 20, 24, 0.6);
+      white-space: nowrap;
+    }
+
+    .apply-btn:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px -10px rgba(197, 160, 89, 0.85);
+    }
+
+    .apply-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.25s ease;
+    }
+
+    .apply-btn:hover svg { transform: translateX(2px); }
+
+    /* ---------- EMPTY STATE ---------- */
+    .empty-state {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--danger);
+      border-radius: 16px;
+      padding: 44px 32px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .empty-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--danger-bg);
+      color: var(--danger);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+    }
+
+    .empty-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+
+    .empty-state p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+
+    .empty-state .btn-ghost {
+      display: inline-block;
+      padding: 12px 26px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .empty-state .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+      background: #fdfbf5;
+    }
+
+    /* ---------- ACTIONS ROW ---------- */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border: 1.5px solid var(--dark-bg);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--dark-bg);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-outline-dark:hover {
+      background: var(--dark-bg);
+      color: #fff;
+    }
+
+    .btn-outline-dark svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-gold-solid {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border: 1.5px solid var(--gold);
+      border-radius: 999px;
+      background: var(--gold);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 26px -12px rgba(197, 160, 89, 0.9);
+    }
+
+    .btn-gold-solid:hover {
+      background: var(--gold-dark);
+      border-color: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px -12px rgba(197, 160, 89, 1);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 640px) {
+      .page { padding: 40px 16px 80px; }
+      .summary-card { padding: 30px 24px; }
+      .summary-grid { grid-template-columns: 1fr; gap: 18px; }
+      .course-item { flex-direction: column; align-items: stretch; gap: 14px; }
+      .course-info { width: 100%; }
+      .apply-btn { justify-content: center; }
+      .topbar { padding: 16px 5%; }
+      .brand-emblem { width: 40px; height: 40px; }
+      .brand-text { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Application Results</h1>
 
-        <p><strong>Name:</strong> {{ student_name }}</p>
-        <p><strong>University Selected:</strong> {{ university }}</p>
-        <p><strong>Your APS Score:</strong> {{ aps_score }}</p>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="{{ url_for('index') }}" class="brand">
+        <div class="brand-emblem">
+          <div class="brand-emblem-inner">
+            <span class="title">Apply</span>
+            <span class="sub">Smart</span>
+          </div>
+        </div>
+        <span class="brand-text">ApplySmart</span>
+      </a>
 
-        <h2>Qualifying Courses:</h2>
-
-        {% if qualifying_courses %}
-            <ul>
-                {% for course in qualifying_courses %}
-                    <li>
-                        {{ course.name }}
-                        <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="apply-btn">Apply</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="no-courses">
-                Unfortunately, you do not currently qualify for any courses at {{ university }} based on your APS.
-            </p>
-        {% endif %}
-
-        <a href="{{ url_for('apply') }}" class="back-link">← Back to Form</a>
+      <form action="{{ url_for('logout') }}" method="get" class="logout-form">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
     </div>
-    <form action="{{ url_for('logout') }}" method="get" style="text-align: right;">
-    <button type="submit" style="background-color: #88c9a1; color: white; padding: 8px 16px; border: none; border-radius: 4px;">
-        Logout
-    </button>
-</form>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="page">
+
+    <div class="page-header">
+      <span class="eyebrow">Application Results</span>
+      <h1>Here's where you stand.</h1>
+      <p>Based on your APS score and chosen university, here are the programmes you qualify for.</p>
+    </div>
+
+    <!-- SUMMARY CARD -->
+    <section class="summary-card">
+      <div class="summary-header">
+        <span class="label">Your Summary</span>
+        <h2>{{ student_name }}, here's your result for <em>{{ university }}</em>.</h2>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="item-label">Student Name</span>
+          <span class="item-value">{{ student_name }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="item-label">University</span>
+          <span class="item-value">{{ university }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="item-label">Your APS Score</span>
+          <span class="item-value aps">{{ aps_score }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="item-label">Qualifying Courses</span>
+          <span class="item-value">{{ qualifying_courses|length if qualifying_courses else 0 }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUALIFYING COURSES -->
+    {% if qualifying_courses %}
+      <div class="section-title">
+        <h3>You qualify for these courses</h3>
+        <p class="count">
+          <strong>{{ qualifying_courses|length }}</strong>
+          course{{ 's' if qualifying_courses|length != 1 else '' }} matched your APS
+        </p>
+      </div>
+
+      <ul class="course-list">
+        {% for course in qualifying_courses %}
+          <li class="course-item">
+            <div class="course-info">
+              <span class="course-check">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span class="course-name">{{ course.name }}</span>
+            </div>
+            <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="apply-btn">
+              Apply
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h3>No qualifying courses found</h3>
+        <p>
+          Based on your current APS score of <strong>{{ aps_score }}</strong>, you don't meet the
+          minimum requirement for any courses at {{ university }}. Try a different university or
+          review your subject points.
+        </p>
+        <a href="{{ url_for('apply') }}" class="btn-ghost">Try another university</a>
+      </div>
+    {% endif %}
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <a href="{{ url_for('apply') }}" class="btn-outline-dark">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Form
+      </a>
+      {% if qualifying_courses %}
+      <a href="{{ url_for('index') }}" class="btn-gold-solid">
+        Explore More
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      {% endif %}
+    </div>
+
+  </main>
+
 </body>
 </html>
